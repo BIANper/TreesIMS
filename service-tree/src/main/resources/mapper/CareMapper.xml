@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyu.tree.dao.CareMapper">
+  <resultMap id="BaseResultMap" type="com.yuyu.tree.po.Care">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="growth_env" jdbcType="TINYINT" property="growthEnv" />
+    <result column="growth_status" jdbcType="TINYINT" property="growthStatus" />
+    <result column="protection" jdbcType="TINYINT" property="protection" />
+    <result column="rejuvenate" jdbcType="TINYINT" property="rejuvenate" />
+    <result column="tree_id" jdbcType="BIGINT" property="treeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, description, growth_env, growth_status, protection, rejuvenate, tree_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Care
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByTreeId" resultType="com.yuyu.tree.po.Care">
+    select
+    <include refid="Base_Column_List" />
+    from Care
+    where tree_id = #{treeId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByGrowthStatus" resultType="com.yuyu.tree.po.Care">
+    select
+    <include refid="Base_Column_List" />
+    from Care
+    where growth_status in (1,2)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from Care
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByTreeIds" parameterType="java.lang.Long">
+    delete from Care
+    where tree_id IN
+    <foreach collection="array" item="treeId" open="(" separator="," close=")">
+      #{treeId}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.yuyu.tree.po.Care">
+    insert into Care (id, description, growth_env, 
+      growth_status, protection, rejuvenate, 
+      tree_id)
+    values (#{id,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{growthEnv,jdbcType=TINYINT}, 
+      #{growthStatus,jdbcType=TINYINT}, #{protection,jdbcType=TINYINT}, #{rejuvenate,jdbcType=TINYINT}, 
+      #{treeId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuyu.tree.po.Care">
+    insert into Care
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="growthEnv != null">
+        growth_env,
+      </if>
+      <if test="growthStatus != null">
+        growth_status,
+      </if>
+      <if test="protection != null">
+        protection,
+      </if>
+      <if test="rejuvenate != null">
+        rejuvenate,
+      </if>
+      <if test="treeId != null">
+        tree_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="growthEnv != null">
+        #{growthEnv,jdbcType=TINYINT},
+      </if>
+      <if test="growthStatus != null">
+        #{growthStatus,jdbcType=TINYINT},
+      </if>
+      <if test="protection != null">
+        #{protection,jdbcType=TINYINT},
+      </if>
+      <if test="rejuvenate != null">
+        #{rejuvenate,jdbcType=TINYINT},
+      </if>
+      <if test="treeId != null">
+        #{treeId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuyu.tree.po.Care">
+    update Care
+    <set>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="growthEnv != null">
+        growth_env = #{growthEnv,jdbcType=TINYINT},
+      </if>
+      <if test="growthStatus != null">
+        growth_status = #{growthStatus,jdbcType=TINYINT},
+      </if>
+      <if test="protection != null">
+        protection = #{protection,jdbcType=TINYINT},
+      </if>
+      <if test="rejuvenate != null">
+        rejuvenate = #{rejuvenate,jdbcType=TINYINT},
+      </if>
+      <if test="treeId != null">
+        tree_id = #{treeId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuyu.tree.po.Care">
+    update Care
+    set description = #{description,jdbcType=VARCHAR},
+      growth_env = #{growthEnv,jdbcType=TINYINT},
+      growth_status = #{growthStatus,jdbcType=TINYINT},
+      protection = #{protection,jdbcType=TINYINT},
+      rejuvenate = #{rejuvenate,jdbcType=TINYINT},
+      tree_id = #{treeId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

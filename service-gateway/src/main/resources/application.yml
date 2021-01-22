@@ -1,0 +1,31 @@
+tims:
+  service:
+    service-auth: auth
+    service-map: map
+    service-tree: tree
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: ${tims.service.service-auth}
+          uri: lb://${tims.service.service-auth}
+          predicates:
+            - Path=/${tims.service.service-auth}/**
+          filters:
+            - RewritePath=/${tims.service.service-auth}/(?<segment>.*),/$\{segment}
+        - id: ${tims.service.service-map}
+          uri: lb://${tims.service.service-map}
+          predicates:
+            - Path=/${tims.service.service-map}/**
+          filters:
+            - RewritePath=/${tims.service.service-map}/(?<segment>.*),/$\{segment}
+        - id: ${tims.service.service-tree}
+          uri: lb://${tims.service.service-tree}
+          predicates:
+            - Path=/${tims.service.service-tree}/**
+          filters:
+            - RewritePath=/${tims.service.service-tree}/(?<segment>.*),/$\{segment}
+
+
+

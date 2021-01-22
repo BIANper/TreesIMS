@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyu.tree.dao.RecordMapper">
+  <resultMap id="BaseResultMap" type="com.yuyu.tree.po.Record">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="tree_id" jdbcType="BIGINT" property="treeId" />
+    <result column="type" jdbcType="BIT" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, action, create_time, creator, tree_id, type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByTreeId" resultType="com.yuyu.tree.po.Record">
+    select
+    <include refid="Base_Column_List" />
+    from Record
+    where tree_id = #{treeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from Record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByTreeIds" parameterType="java.lang.Long">
+    delete from Record
+    where tree_id IN
+    <foreach collection="array" item="treeId" open="(" separator="," close=")">
+      #{treeId}
+    </foreach>
+  </delete>
+    <insert id="insert" parameterType="com.yuyu.tree.po.Record">
+    insert into Record (id, action, create_time, 
+      creator, tree_id, type)
+    values (#{id,jdbcType=BIGINT}, #{action,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{treeId,jdbcType=BIGINT}, #{type,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuyu.tree.po.Record">
+    insert into Record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="action != null">
+        action,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="treeId != null">
+        tree_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="action != null">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="treeId != null">
+        #{treeId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuyu.tree.po.Record">
+    update Record
+    <set>
+      <if test="action != null">
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="treeId != null">
+        tree_id = #{treeId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuyu.tree.po.Record">
+    update Record
+    set action = #{action,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      tree_id = #{treeId,jdbcType=BIGINT},
+      type = #{type,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

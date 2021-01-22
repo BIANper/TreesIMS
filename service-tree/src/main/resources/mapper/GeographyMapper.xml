@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyu.tree.dao.GeographyMapper">
+  <resultMap id="BaseResultMap" type="com.yuyu.tree.po.Geography">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="altitude" jdbcType="SMALLINT" property="altitude" />
+    <result column="area_id" jdbcType="INTEGER" property="areaId" />
+    <result column="aspect" jdbcType="TINYINT" property="aspect" />
+    <result column="compactness" jdbcType="TINYINT" property="compactness" />
+    <result column="position" jdbcType="TINYINT" property="position" />
+    <result column="slope" jdbcType="TINYINT" property="slope" />
+    <result column="soil" jdbcType="VARCHAR" property="soil" />
+    <result column="tree_id" jdbcType="BIGINT" property="treeId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yuyu.tree.po.Geography">
+    <result column="gis" jdbcType="BINARY" property="gis" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, address, altitude, area_id, aspect, compactness, position, slope, soil, tree_id
+  </sql>
+  <sql id="Blob_Column_List">
+    gis
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from Geography
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByTreeId" resultType="com.yuyu.tree.po.Geography">
+    select
+    <include refid="Base_Column_List" />
+    from Geography
+    where tree_id = #{treeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from Geography
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByTreeIds" parameterType="java.lang.Long">
+    delete from Geography
+    where tree_id IN
+    <foreach collection="array" item="treeId" open="(" separator="," close=")">
+      #{treeId}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.yuyu.tree.po.Geography">
+    insert into Geography (id, address, altitude, 
+      area_id, aspect, compactness, 
+      position, slope, soil, 
+      tree_id, gis)
+    values (#{id,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{altitude,jdbcType=SMALLINT}, 
+      #{areaId,jdbcType=INTEGER}, #{aspect,jdbcType=TINYINT}, #{compactness,jdbcType=TINYINT}, 
+      #{position,jdbcType=TINYINT}, #{slope,jdbcType=TINYINT}, #{soil,jdbcType=VARCHAR}, 
+      #{treeId,jdbcType=BIGINT}, #{gis,jdbcType=BINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuyu.tree.po.Geography">
+    insert into Geography
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="altitude != null">
+        altitude,
+      </if>
+      <if test="areaId != null">
+        area_id,
+      </if>
+      <if test="aspect != null">
+        aspect,
+      </if>
+      <if test="compactness != null">
+        compactness,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="slope != null">
+        slope,
+      </if>
+      <if test="soil != null">
+        soil,
+      </if>
+      <if test="treeId != null">
+        tree_id,
+      </if>
+      <if test="gis != null">
+        gis,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="altitude != null">
+        #{altitude,jdbcType=SMALLINT},
+      </if>
+      <if test="areaId != null">
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="aspect != null">
+        #{aspect,jdbcType=TINYINT},
+      </if>
+      <if test="compactness != null">
+        #{compactness,jdbcType=TINYINT},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=TINYINT},
+      </if>
+      <if test="slope != null">
+        #{slope,jdbcType=TINYINT},
+      </if>
+      <if test="soil != null">
+        #{soil,jdbcType=VARCHAR},
+      </if>
+      <if test="treeId != null">
+        #{treeId,jdbcType=BIGINT},
+      </if>
+      <if test="gis != null">
+        #{gis,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuyu.tree.po.Geography">
+    update Geography
+    <set>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="altitude != null">
+        altitude = #{altitude,jdbcType=SMALLINT},
+      </if>
+      <if test="areaId != null">
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="aspect != null">
+        aspect = #{aspect,jdbcType=TINYINT},
+      </if>
+      <if test="compactness != null">
+        compactness = #{compactness,jdbcType=TINYINT},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=TINYINT},
+      </if>
+      <if test="slope != null">
+        slope = #{slope,jdbcType=TINYINT},
+      </if>
+      <if test="soil != null">
+        soil = #{soil,jdbcType=VARCHAR},
+      </if>
+      <if test="treeId != null">
+        tree_id = #{treeId,jdbcType=BIGINT},
+      </if>
+      <if test="gis != null">
+        gis = #{gis,jdbcType=BINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yuyu.tree.po.Geography">
+    update Geography
+    set address = #{address,jdbcType=VARCHAR},
+      altitude = #{altitude,jdbcType=SMALLINT},
+      area_id = #{areaId,jdbcType=INTEGER},
+      aspect = #{aspect,jdbcType=TINYINT},
+      compactness = #{compactness,jdbcType=TINYINT},
+      position = #{position,jdbcType=TINYINT},
+      slope = #{slope,jdbcType=TINYINT},
+      soil = #{soil,jdbcType=VARCHAR},
+      tree_id = #{treeId,jdbcType=BIGINT},
+      gis = #{gis,jdbcType=BINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuyu.tree.po.Geography">
+    update Geography
+    set address = #{address,jdbcType=VARCHAR},
+      altitude = #{altitude,jdbcType=SMALLINT},
+      area_id = #{areaId,jdbcType=INTEGER},
+      aspect = #{aspect,jdbcType=TINYINT},
+      compactness = #{compactness,jdbcType=TINYINT},
+      position = #{position,jdbcType=TINYINT},
+      slope = #{slope,jdbcType=TINYINT},
+      soil = #{soil,jdbcType=VARCHAR},
+      tree_id = #{treeId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

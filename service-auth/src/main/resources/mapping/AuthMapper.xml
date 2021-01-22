@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yuyu.auth.mapper.AuthMapper">
+    <select id="findUserByUsername" resultType="User">
+        SELECT * FROM tims_auth.user WHERE username=#{username}
+    </select>
+
+    <select id="findRoleByUserId" resultType="Role">
+        SELECT * FROM tims_auth.role WHERE `id` IN
+        (
+            SELECT `roles_id` FROM tims_auth.user_roles WHERE user_id=#{userId}
+        )
+    </select>
+</mapper>

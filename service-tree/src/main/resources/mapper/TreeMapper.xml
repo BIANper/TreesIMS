@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyu.tree.dao.TreeMapper">
+  <resultMap id="BaseResultMap" type="com.yuyu.tree.po.Tree">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="age_estim" jdbcType="SMALLINT" property="ageEstim" />
+    <result column="ager_real" jdbcType="SMALLINT" property="agerReal" />
+    <result column="bust" jdbcType="SMALLINT" property="bust" />
+    <result column="classes" jdbcType="TINYINT" property="classes" />
+    <result column="distribution" jdbcType="BIT" property="distribution" />
+    <result column="genus_id" jdbcType="BIGINT" property="genusId" />
+    <result column="height" jdbcType="REAL" property="height" />
+    <result column="identifier" jdbcType="CHAR" property="identifier" />
+    <result column="name_la" jdbcType="VARCHAR" property="nameLa" />
+    <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
+    <result column="ownership" jdbcType="TINYINT" property="ownership" />
+    <result column="width_ew" jdbcType="SMALLINT" property="widthEw" />
+    <result column="width_sn" jdbcType="SMALLINT" property="widthSn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, age_estim, ager_real, bust, classes, distribution, genus_id, height, identifier,
+    name_la, name_zh, ownership, width_ew, width_sn
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Tree
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultType="com.yuyu.tree.po.Tree">
+    select
+    <include refid="Base_Column_List" />
+    from Tree
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from Tree
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimaryKeys" parameterType="java.lang.Long">
+    delete from Tree
+    where id IN
+    <foreach collection="array" item="treeId" open="(" separator="," close=")">
+      #{treeId}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.yuyu.tree.po.Tree">
+    insert into Tree (id, age_estim, ager_real, 
+      bust, classes, distribution, 
+      genus_id, height, identifier, 
+      name_la, name_zh, ownership, 
+      width_ew, width_sn)
+    values (#{id,jdbcType=BIGINT}, #{ageEstim,jdbcType=SMALLINT}, #{agerReal,jdbcType=SMALLINT}, 
+      #{bust,jdbcType=SMALLINT}, #{classes,jdbcType=TINYINT}, #{distribution,jdbcType=BIT}, 
+      #{genusId,jdbcType=BIGINT}, #{height,jdbcType=REAL}, #{identifier,jdbcType=CHAR}, 
+      #{nameLa,jdbcType=VARCHAR}, #{nameZh,jdbcType=VARCHAR}, #{ownership,jdbcType=TINYINT}, 
+      #{widthEw,jdbcType=SMALLINT}, #{widthSn,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuyu.tree.po.Tree">
+    insert into Tree
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ageEstim != null">
+        age_estim,
+      </if>
+      <if test="agerReal != null">
+        ager_real,
+      </if>
+      <if test="bust != null">
+        bust,
+      </if>
+      <if test="classes != null">
+        classes,
+      </if>
+      <if test="distribution != null">
+        distribution,
+      </if>
+      <if test="genusId != null">
+        genus_id,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="identifier != null">
+        identifier,
+      </if>
+      <if test="nameLa != null">
+        name_la,
+      </if>
+      <if test="nameZh != null">
+        name_zh,
+      </if>
+      <if test="ownership != null">
+        ownership,
+      </if>
+      <if test="widthEw != null">
+        width_ew,
+      </if>
+      <if test="widthSn != null">
+        width_sn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ageEstim != null">
+        #{ageEstim,jdbcType=SMALLINT},
+      </if>
+      <if test="agerReal != null">
+        #{agerReal,jdbcType=SMALLINT},
+      </if>
+      <if test="bust != null">
+        #{bust,jdbcType=SMALLINT},
+      </if>
+      <if test="classes != null">
+        #{classes,jdbcType=TINYINT},
+      </if>
+      <if test="distribution != null">
+        #{distribution,jdbcType=BIT},
+      </if>
+      <if test="genusId != null">
+        #{genusId,jdbcType=BIGINT},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=REAL},
+      </if>
+      <if test="identifier != null">
+        #{identifier,jdbcType=CHAR},
+      </if>
+      <if test="nameLa != null">
+        #{nameLa,jdbcType=VARCHAR},
+      </if>
+      <if test="nameZh != null">
+        #{nameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="ownership != null">
+        #{ownership,jdbcType=TINYINT},
+      </if>
+      <if test="widthEw != null">
+        #{widthEw,jdbcType=SMALLINT},
+      </if>
+      <if test="widthSn != null">
+        #{widthSn,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuyu.tree.po.Tree">
+    update Tree
+    <set>
+      <if test="ageEstim != null">
+        age_estim = #{ageEstim,jdbcType=SMALLINT},
+      </if>
+      <if test="agerReal != null">
+        ager_real = #{agerReal,jdbcType=SMALLINT},
+      </if>
+      <if test="bust != null">
+        bust = #{bust,jdbcType=SMALLINT},
+      </if>
+      <if test="classes != null">
+        classes = #{classes,jdbcType=TINYINT},
+      </if>
+      <if test="distribution != null">
+        distribution = #{distribution,jdbcType=BIT},
+      </if>
+      <if test="genusId != null">
+        genus_id = #{genusId,jdbcType=BIGINT},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=REAL},
+      </if>
+      <if test="identifier != null">
+        identifier = #{identifier,jdbcType=CHAR},
+      </if>
+      <if test="nameLa != null">
+        name_la = #{nameLa,jdbcType=VARCHAR},
+      </if>
+      <if test="nameZh != null">
+        name_zh = #{nameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="ownership != null">
+        ownership = #{ownership,jdbcType=TINYINT},
+      </if>
+      <if test="widthEw != null">
+        width_ew = #{widthEw,jdbcType=SMALLINT},
+      </if>
+      <if test="widthSn != null">
+        width_sn = #{widthSn,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuyu.tree.po.Tree">
+    update Tree
+    set age_estim = #{ageEstim,jdbcType=SMALLINT},
+      ager_real = #{agerReal,jdbcType=SMALLINT},
+      bust = #{bust,jdbcType=SMALLINT},
+      classes = #{classes,jdbcType=TINYINT},
+      distribution = #{distribution,jdbcType=BIT},
+      genus_id = #{genusId,jdbcType=BIGINT},
+      height = #{height,jdbcType=REAL},
+      identifier = #{identifier,jdbcType=CHAR},
+      name_la = #{nameLa,jdbcType=VARCHAR},
+      name_zh = #{nameZh,jdbcType=VARCHAR},
+      ownership = #{ownership,jdbcType=TINYINT},
+      width_ew = #{widthEw,jdbcType=SMALLINT},
+      width_sn = #{widthSn,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
