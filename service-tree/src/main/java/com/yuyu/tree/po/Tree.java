@@ -20,12 +20,12 @@ public class Tree {
     /**
      * 级别 0名木 1一级 2二级 3三级
      */
-    private ClassesEnum classes;
+    private Byte classes;
 
     /**
      * 分布 0散生 1群状
      */
-    private Boolean distribution;
+    private Byte distribution;
 
     /**
      * 中文名
@@ -50,7 +50,7 @@ public class Tree {
     /**
      * 真实树龄
      */
-    private Short agerReal;
+    private Short ageReal;
 
     /**
      * 树高m
@@ -75,6 +75,6 @@ public class Tree {
     /**
      * 权属 0国有 1集体 2个人 3其他
      */
-    private OwnershipEnum ownership;
+    private Byte ownership;
 
 }

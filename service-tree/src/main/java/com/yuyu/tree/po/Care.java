@@ -17,12 +17,12 @@ public class Care {
     /**
      * 生长势 0正常株 1衰弱株 2濒危株 3死亡株
      */
-    private StatusEnum growthStatus;
+    private Byte growthStatus;
 
     /**
      * 生长环境 0好 1中 2差
      */
-    private EnvEnum growthEnv;
+    private Byte growthEnv;
 
     /**
      * 保护

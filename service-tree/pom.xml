@@ -22,6 +22,10 @@
             <artifactId>common</artifactId>
             <version>${tree-ims.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!-- session -->
         <dependency>
             <groupId>org.springframework.session</groupId>

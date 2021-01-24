@@ -25,6 +25,11 @@ public class TreeVo extends Tree {
     private Long areaId;
 
     /**
+     * 地区
+     */
+    private String area;
+
+    /**
      * 地址
      */
     private String address;
@@ -37,17 +42,17 @@ public class TreeVo extends Tree {
     /**
      * 坡向 0平地 1东 2西 3南 4北 5东南 6东北 7西南 8西北
      */
-    private AspectEnum aspect;
+    private Byte aspect;
 
     /**
      * 坡度 0平坡 1缓坡 2斜坡 3陡坡 4急坡 5险坡
      */
-    private SlopeEnum slope;
+    private Byte slope;
 
     /**
      * 坡位 0平地 1脊部 2上部 3中部 4下部 5山谷
      */
-    private PositionEnum position;
+    private Byte position;
 
     /**
      * 土壤
@@ -57,17 +62,17 @@ public class TreeVo extends Tree {
     /**
      * 紧密度 0极紧密 1紧密 2中等 3较疏松 4疏松
      */
-    private CompactnessEnum compactness;
+    private Byte compactness;
 
     /**
      * 生长势 0正常株 1衰弱株 2濒危株 3死亡株
      */
-    private StatusEnum growthStatus;
+    private Byte growthStatus;
 
     /**
      * 生长环境 0好 1中 2差
      */
-    private EnvEnum growthEnv;
+    private Byte growthEnv;
 
     /**
      * 保护

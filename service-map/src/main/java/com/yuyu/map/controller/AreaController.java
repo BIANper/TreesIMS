@@ -39,7 +39,7 @@ public class AreaController {
     @GetMapping("/{id}")
     public R getArea(@PathVariable("id") Integer id) {
         Area area = areaService.getArea(id);
-        return R.ok().put("data",area);
+        return R.ok().put("data",area.getName());
     }
 
 }

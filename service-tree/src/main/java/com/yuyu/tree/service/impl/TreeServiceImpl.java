@@ -3,10 +3,12 @@ package com.yuyu.tree.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yuyu.common.utils.R;
 import com.yuyu.tree.dao.CareMapper;
 import com.yuyu.tree.dao.GeographyMapper;
 import com.yuyu.tree.dao.RecordMapper;
 import com.yuyu.tree.dao.TreeMapper;
+import com.yuyu.tree.feign.MapFeignService;
 import com.yuyu.tree.po.Care;
 import com.yuyu.tree.po.Geography;
 import com.yuyu.tree.po.Record;
@@ -35,6 +37,8 @@ public class TreeServiceImpl implements TreeService {
     private CareMapper careMapper;
     @Autowired
     private RecordMapper recordMapper;
+    @Autowired
+    private MapFeignService mapFeignService;
 
     @Override
     public PageInfo<TreeBaseVo> getTreeBasePage(PageVo pageVo) {
@@ -46,6 +50,8 @@ public class TreeServiceImpl implements TreeService {
             BeanUtils.copyProperties(tree, baseVo);
             Geography geography = geographyMapper.selectByTreeId(tree.getId());
             BeanUtils.copyProperties(geography,baseVo);
+            R area = mapFeignService.getArea(geography.getAreaId());
+            baseVo.setArea(area.get("data"));
             return baseVo;
         }).collect(Collectors.toList());
         pageInfo.setList(treeBaseVoList);

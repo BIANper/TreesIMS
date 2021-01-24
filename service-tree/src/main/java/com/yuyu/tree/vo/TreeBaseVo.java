@@ -8,10 +8,12 @@ import lombok.EqualsAndHashCode;
 @Data
 public class TreeBaseVo extends Tree {
 
+
+
     /**
      * 地区
      */
-    private Integer areaId;
+    private String area;
 
     /**
      * 地址
