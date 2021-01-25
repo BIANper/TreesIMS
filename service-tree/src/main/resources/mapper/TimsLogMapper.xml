@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyu.tree.dao.TimsLogMapper">
+  <resultMap id="BaseResultMap" type="com.yuyu.tree.po.TimsLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="action" jdbcType="TINYINT" property="action" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="tree_id" jdbcType="BIGINT" property="treeId" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, action, create_time, creator, tree_id, params
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tims_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByTreeId" resultType="com.yuyu.tree.po.TimsLog">
+    select
+    <include refid="Base_Column_List" />
+    from tims_log
+    where tree_id = #{treeId,jdbcType=BIGINT}
+  </select>
+    <insert id="insert" parameterType="com.yuyu.tree.po.TimsLog">
+    insert into tims_log (id, action, create_time,
+      creator, tree_id, params)
+    values (#{id,jdbcType=BIGINT}, #{action,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
+      #{creator,jdbcType=VARCHAR}, #{treeId,jdbcType=BIGINT}, #{params,jdbcType=VARCHAR})
+  </insert>
+</mapper>

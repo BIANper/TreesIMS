@@ -42,7 +42,7 @@ public class TreeController {
     public R addTree(@RequestBody TreeVo treeVo,
                      HttpSession session) {
         String username = getUsername(session);
-        treeService.saveTree(treeVo,username);
+        treeService.saveTree(treeVo, username);
         return R.ok();
     }
 

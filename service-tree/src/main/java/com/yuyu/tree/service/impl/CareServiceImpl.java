@@ -10,7 +10,6 @@ import com.yuyu.tree.po.Tree;
 import com.yuyu.tree.service.CareService;
 import com.yuyu.tree.vo.CareVo;
 import com.yuyu.tree.vo.PageVo;
-import com.yuyu.tree.vo.TreeVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

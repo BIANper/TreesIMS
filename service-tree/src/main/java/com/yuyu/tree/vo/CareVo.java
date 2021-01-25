@@ -13,6 +13,6 @@ public class CareVo extends Care {
 
     private String identifier;
 
-    private ClassesEnum classes;
+    private Byte classes;
 
 }

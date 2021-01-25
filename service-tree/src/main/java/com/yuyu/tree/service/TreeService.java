@@ -11,7 +11,7 @@ public interface TreeService {
 
     TreeVo getTreeVo(Long treeId);
 
-    void saveTree(TreeVo treeVo, String username);
+    Long saveTree(TreeVo treeVo, String username);
 
     void updateTreeBase(TreeVo treeVo, String username);
 
