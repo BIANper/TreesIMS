@@ -1,6 +1,5 @@
 package com.yuyu.tree.vo;
 
-import com.yuyu.tree.enums.*;
 import com.yuyu.tree.po.Tree;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +21,7 @@ public class TreeVo extends Tree {
     /**
      * 地区
      */
-    private Long areaId;
+    private Integer areaId;
 
     /**
      * 地区

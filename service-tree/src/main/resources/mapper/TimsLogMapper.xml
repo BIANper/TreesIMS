@@ -7,7 +7,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="tree_id" jdbcType="BIGINT" property="treeId" />
-    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
   </resultMap>
   <sql id="Base_Column_List">
     id, action, create_time, creator, tree_id, params

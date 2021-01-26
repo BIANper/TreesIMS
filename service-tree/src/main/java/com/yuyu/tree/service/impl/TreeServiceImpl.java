@@ -20,6 +20,7 @@ import com.yuyu.tree.vo.TreeVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,6 +69,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     @SysLog(ActEnum.CREATE)
+    @Transactional
     public Long saveTree(TreeVo treeVo, String username) {
         Tree tree = new Tree();
         BeanUtils.copyProperties(treeVo,tree);
@@ -85,6 +87,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Override
     @SysLog(ActEnum.UPDATA)
+    @Transactional
     public void updateTreeBase(TreeVo treeVo, String username) {
         Tree tree = new Tree();
         BeanUtils.copyProperties(treeVo,tree);
@@ -95,6 +98,7 @@ public class TreeServiceImpl implements TreeService {
     }
 
     @Override
+    @Transactional
     public void deleteTree(Long[] treeIds) {
         treeMapper.deleteByPrimaryKeys(treeIds);
         geographyMapper.deleteByTreeIds(treeIds);
