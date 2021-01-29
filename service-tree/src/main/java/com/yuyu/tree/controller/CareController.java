@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Api(tags={"树木养护数据接口"})
 @RestController
 @RequestMapping("/care")
@@ -34,6 +38,13 @@ public class CareController {
     public R updateCare(Care care) {
         careService.updateCare(care);
         return R.ok();
+    }
+
+    @ApiOperation(httpMethod = "PUT",value = "获取图表数据")
+    @GetMapping("/chart")
+    public R getChartData() {
+        Map<String, List<Map<String, String>>> data = careService.getChartData();
+        return R.ok().put("data",data);
     }
 
 

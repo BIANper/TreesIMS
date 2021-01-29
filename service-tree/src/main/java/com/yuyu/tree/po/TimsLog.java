@@ -1,6 +1,5 @@
 package com.yuyu.tree.po;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.io.Serializable;

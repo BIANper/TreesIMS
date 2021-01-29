@@ -4,7 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.yuyu.tree.po.Care;
 import com.yuyu.tree.vo.CareVo;
 import com.yuyu.tree.vo.PageVo;
-import com.yuyu.tree.vo.TreeVo;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public interface CareService {
 
@@ -12,4 +16,5 @@ public interface CareService {
 
     void updateCare(Care care);
 
+    Map<String, List<Map<String, String>>> getChartData();
 }

@@ -12,6 +12,12 @@
   <sql id="Base_Column_List">
     id, action, create_time, creator, tree_id, params
   </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tims_log
+    order by create_time desc
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

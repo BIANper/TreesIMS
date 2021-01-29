@@ -10,6 +10,10 @@ public interface TimsLogMapper {
 
     void insert(TimsLog timsLog);
 
+    List<TimsLog> selectByPrimaryKey(Long id);
+
     List<TimsLog> selectByTreeId(Long treeId);
+
+    List<TimsLog> selectAll();
 
 }

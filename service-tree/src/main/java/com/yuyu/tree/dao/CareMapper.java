@@ -4,6 +4,7 @@ import com.yuyu.tree.po.Care;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CareMapper {
@@ -24,4 +25,8 @@ public interface CareMapper {
     int updateByPrimaryKeySelective(Care record);
 
     int updateByPrimaryKey(Care record);
+
+    List<Map<String, String>> selectStatusTotal();
+
+    List<Map<String, String>> selectEnvTotal();
 }

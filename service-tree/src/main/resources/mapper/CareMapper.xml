@@ -10,6 +10,13 @@
     <result column="rejuvenate" jdbcType="TINYINT" property="rejuvenate" />
     <result column="tree_id" jdbcType="BIGINT" property="treeId" />
   </resultMap>
+  <resultMap id="statusMap" type="java.util.Map">
+    <result column="status" property="status" javaType="String"/>
+  </resultMap>
+  <resultMap id="envMap" type="java.util.Map">
+    <result column="env" property="env" javaType="String"/>
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, description, growth_env, growth_status, protection, rejuvenate, tree_id
   </sql>
@@ -29,7 +36,13 @@
     select
     <include refid="Base_Column_List" />
     from Care
-    where growth_status in (1,2)
+    where growth_status >= 2
+  </select>
+  <select id="selectStatusTotal" resultMap="statusMap">
+    select count(*) as 'total',growth_status as 'status' from Care group by growth_status order by growth_status
+  </select>
+  <select id="selectEnvTotal" resultMap="envMap">
+    select count(*) as 'total',growth_env as 'env' from Care group by growth_env order by growth_env
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from Care

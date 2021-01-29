@@ -14,7 +14,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,5 +48,41 @@ public class CareServiceImpl implements CareService {
     @Override
     public void updateCare(Care care) {
         careMapper.updateByPrimaryKeySelective(care);
+    }
+
+    @Override
+    public Map<String, List<Map<String, String>>> getChartData() {
+        HashMap<String, List<Map<String, String>>> map = new HashMap<>();
+        List<Map<String, String>> statusTotal = careMapper.selectStatusTotal();
+        statusTotal.forEach( statusMap -> {
+            switch (statusMap.get("status")) {
+                case "0":
+                    statusMap.put("status","正常株");
+                    break;
+                case "1":
+                    statusMap.put("status","衰弱株");
+                    break;
+                case "2":
+                    statusMap.put("status","濒危株");
+                    break;
+            }
+        });
+        List<Map<String, String>> envTotal = careMapper.selectEnvTotal();
+        envTotal.forEach( envMap -> {
+            switch (envMap.get("env")) {
+                case "0":
+                    envMap.put("env","良好");
+                    break;
+                case "1":
+                    envMap.put("env","中等");
+                    break;
+                case "2":
+                    envMap.put("env","差");
+                    break;
+            }
+        });
+        map.put("status",statusTotal);
+        map.put("env",envTotal);
+        return map;
     }
 }
