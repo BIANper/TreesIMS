@@ -1,5 +1,6 @@
 package com.yuyu.auth.controller;
 
+import com.yuyu.common.utils.R;
 import com.yuyu.common.utils.VerifyCodeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

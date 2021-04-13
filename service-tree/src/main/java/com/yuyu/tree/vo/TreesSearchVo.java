@@ -4,7 +4,7 @@ import com.github.pagehelper.IPage;
 import lombok.Data;
 
 @Data
-public class PageVo implements IPage {
+public class TreesSearchVo implements IPage {
 
     private Integer pageNum = 1;
 
@@ -12,8 +12,10 @@ public class PageVo implements IPage {
 
     private String orderBy = null;
 
-    public PageVo(Integer pageNum, Integer pageSize) {
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
-    }
+    private String identifier;
+
+    private String name;
+
+    private Integer classes;
+
 }

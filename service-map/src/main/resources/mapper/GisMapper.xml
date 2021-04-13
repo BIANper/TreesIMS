@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuyu.map.dao.GisMapper">
+    <select id="getAll" resultType="com.yuyu.map.po.GIS">
+        SELECT id, tree_id, ST_AsText(gis) as gis FROM tims_map.gis;
+    </select>
+    <select id="getByTreeIds" resultType="com.yuyu.map.po.GIS">
+        SELECT id, tree_id, ST_AsText(gis) as gis FROM tims_map.gis WHERE tree_id IN #{treeIds};
+    </select>
+</mapper>

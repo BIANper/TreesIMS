@@ -9,12 +9,8 @@ import com.yuyu.tree.vo.PageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +33,13 @@ public class CareController {
     @PutMapping("/")
     public R updateCare(Care care) {
         careService.updateCare(care);
+        return R.ok();
+    }
+
+    @ApiOperation(httpMethod = "POST",value = "新增养护数据")
+    @PostMapping("/")
+    public R addCare(Care care, Long treeId) {
+        careService.addCare(care, treeId);
         return R.ok();
     }
 

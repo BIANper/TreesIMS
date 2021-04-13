@@ -2,11 +2,10 @@ package com.yuyu.tree.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.yuyu.common.utils.R;
-import com.yuyu.tree.service.CareService;
 import com.yuyu.tree.service.TreeService;
-import com.yuyu.tree.vo.PageVo;
 import com.yuyu.tree.vo.TreeBaseVo;
 import com.yuyu.tree.vo.TreeVo;
+import com.yuyu.tree.vo.TreesSearchVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class TreeController {
 
     @ApiOperation(httpMethod = "GET",value = "获取树木基本数据页")
     @GetMapping("/list/base")
-    public R getTreeBaseList(PageVo pageVo) {
-        PageInfo<TreeBaseVo> treeList = treeService.getTreeBasePage(pageVo);
+    public R getTreeBaseList(TreesSearchVo searchVo) {
+        PageInfo<TreeBaseVo> treeList = treeService.getTreeBasePage(searchVo);
         return R.ok().put("data",treeList);
     }
 
@@ -39,7 +38,7 @@ public class TreeController {
 
     @ApiOperation(httpMethod = "POST",value = "新增树木数据")
     @PostMapping("/")
-    public R addTree(@RequestBody TreeVo treeVo,
+    public R addTree(TreeVo treeVo,
                      HttpSession session) {
         String username = getUsername(session);
         treeService.saveTree(treeVo, username);
@@ -48,7 +47,7 @@ public class TreeController {
 
     @ApiOperation(httpMethod = "PUT",value = "更新树木数据")
     @PutMapping("/")
-    public R updateTree(@RequestBody TreeVo treeVo,
+    public R updateTree(TreeVo treeVo,
                         HttpSession session) {
         String username = getUsername(session);
         treeService.updateTreeBase(treeVo,username);
@@ -57,7 +56,7 @@ public class TreeController {
 
     @ApiOperation(httpMethod = "DELETE",value = "删除树木数据")
     @DeleteMapping("/")
-    public R deleteTree(@RequestBody Long[] treeIds) {
+    public R deleteTree(Long[] treeIds) {
         treeService.deleteTree(treeIds);
         return R.ok();
     }

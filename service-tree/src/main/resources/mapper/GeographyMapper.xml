@@ -13,20 +13,12 @@
     <result column="soil" jdbcType="VARCHAR" property="soil" />
     <result column="tree_id" jdbcType="BIGINT" property="treeId" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yuyu.tree.po.Geography">
-    <result column="gis" jdbcType="BINARY" property="gis" />
-  </resultMap>
   <sql id="Base_Column_List">
     id, address, altitude, area_id, aspect, compactness, position, slope, soil, tree_id
   </sql>
-  <sql id="Blob_Column_List">
-    gis
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from Geography
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -51,11 +43,11 @@
     insert into Geography (id, address, altitude, 
       area_id, aspect, compactness, 
       position, slope, soil, 
-      tree_id, gis)
+      tree_id)
     values (#{id,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{altitude,jdbcType=SMALLINT}, 
       #{areaId,jdbcType=INTEGER}, #{aspect,jdbcType=TINYINT}, #{compactness,jdbcType=TINYINT}, 
       #{position,jdbcType=TINYINT}, #{slope,jdbcType=TINYINT}, #{soil,jdbcType=VARCHAR}, 
-      #{treeId,jdbcType=BIGINT}, #{gis,jdbcType=BINARY})
+      #{treeId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yuyu.tree.po.Geography">
     insert into Geography
@@ -90,9 +82,6 @@
       <if test="treeId != null">
         tree_id,
       </if>
-      <if test="gis != null">
-        gis,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -125,12 +114,9 @@
       <if test="treeId != null">
         #{treeId,jdbcType=BIGINT},
       </if>
-      <if test="gis != null">
-        #{gis,jdbcType=BINARY},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yuyu.tree.po.Geography">
+  <update id="updateByTreeIdSelective" parameterType="com.yuyu.tree.po.Geography">
     update Geography
     <set>
       <if test="address != null">
@@ -157,14 +143,8 @@
       <if test="soil != null">
         soil = #{soil,jdbcType=VARCHAR},
       </if>
-      <if test="treeId != null">
-        tree_id = #{treeId,jdbcType=BIGINT},
-      </if>
-      <if test="gis != null">
-        gis = #{gis,jdbcType=BINARY},
-      </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where tree_id = #{treeId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yuyu.tree.po.Geography">
     update Geography
@@ -176,8 +156,7 @@
       position = #{position,jdbcType=TINYINT},
       slope = #{slope,jdbcType=TINYINT},
       soil = #{soil,jdbcType=VARCHAR},
-      tree_id = #{treeId,jdbcType=BIGINT},
-      gis = #{gis,jdbcType=BINARY}
+      tree_id = #{treeId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yuyu.tree.po.Geography">

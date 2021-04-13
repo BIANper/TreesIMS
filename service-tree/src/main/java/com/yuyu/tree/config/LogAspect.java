@@ -50,9 +50,12 @@ public class LogAspect {
             switch (action) {
                 case 0: {
                     timsLog.setTreeId(treeVo.getId());
+                    break;
                 }
-                case 1: {
+                case 1:
+                case 2: {
                     timsLog.setTreeId((Long) treeId);
+                    break;
                 }
             }
 

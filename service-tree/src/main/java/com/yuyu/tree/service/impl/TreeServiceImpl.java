@@ -17,6 +17,7 @@ import com.yuyu.tree.service.TreeService;
 import com.yuyu.tree.vo.PageVo;
 import com.yuyu.tree.vo.TreeBaseVo;
 import com.yuyu.tree.vo.TreeVo;
+import com.yuyu.tree.vo.TreesSearchVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,9 @@ public class TreeServiceImpl implements TreeService {
     private MapFeignService mapFeignService;
 
     @Override
-    public PageInfo<TreeBaseVo> getTreeBasePage(PageVo pageVo) {
-        Page<TreeBaseVo> page = PageHelper.startPage(pageVo);
-        List<Tree> treeList = treeMapper.selectAll();
+    public PageInfo<TreeBaseVo> getTreeBasePage(TreesSearchVo searchVo) {
+        Page<TreeBaseVo> page = PageHelper.startPage(searchVo);
+        List<Tree> treeList = treeMapper.selectByCond(searchVo);
         PageInfo<TreeBaseVo> pageInfo = page.toPageInfo();
         List<TreeBaseVo> treeBaseVoList = treeList.stream().map(tree -> {
             TreeBaseVo baseVo = new TreeBaseVo();
@@ -48,10 +49,12 @@ public class TreeServiceImpl implements TreeService {
             Geography geography = geographyMapper.selectByTreeId(tree.getId());
             BeanUtils.copyProperties(geography,baseVo);
             R area = mapFeignService.getArea(geography.getAreaId());
-            baseVo.setArea(area.get("data"));
+            baseVo.setArea((String) area.get("data"));
+            baseVo.setId(tree.getId());
             return baseVo;
         }).collect(Collectors.toList());
         pageInfo.setList(treeBaseVoList);
+        PageHelper.clearPage();
         return pageInfo;
     }
 
@@ -64,6 +67,9 @@ public class TreeServiceImpl implements TreeService {
         BeanUtils.copyProperties(geography,treeVo);
         Care care = careMapper.selectByTreeId(treeId);
         BeanUtils.copyProperties(care,treeVo);
+        R area = mapFeignService.getArea(geography.getAreaId());
+        treeVo.setArea((String) area.get("data"));
+        treeVo.setId(tree.getId());
         return treeVo;
     }
 
@@ -88,21 +94,23 @@ public class TreeServiceImpl implements TreeService {
     @Override
     @SysLog(ActEnum.UPDATA)
     @Transactional
-    public void updateTreeBase(TreeVo treeVo, String username) {
+    public Long updateTreeBase(TreeVo treeVo, String username) {
         Tree tree = new Tree();
         BeanUtils.copyProperties(treeVo,tree);
+        treeMapper.updateByPrimaryKeySelective(tree);
         Geography geography = new Geography();
         BeanUtils.copyProperties(treeVo, geography);
         geography.setTreeId(tree.getId());
-        geographyMapper.updateByPrimaryKeySelective(geography);
+        return geographyMapper.updateByTreeIdSelective(geography);
     }
 
     @Override
+    @SysLog(ActEnum.DELETE)
     @Transactional
-    public void deleteTree(Long[] treeIds) {
-        treeMapper.deleteByPrimaryKeys(treeIds);
+    public Long deleteTree(Long[] treeIds) {
         geographyMapper.deleteByTreeIds(treeIds);
         careMapper.deleteByTreeIds(treeIds);
+        return treeMapper.deleteByPrimaryKeys(treeIds);
     }
 
 }

@@ -17,7 +17,7 @@ public interface GeographyMapper {
 
     Geography selectByTreeId(Long treeId);
 
-    int updateByPrimaryKeySelective(Geography record);
+    long updateByTreeIdSelective(Geography record);
 
     int updateByPrimaryKeyWithBLOBs(Geography record);
 

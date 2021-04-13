@@ -42,6 +42,7 @@ public class CareServiceImpl implements CareService {
             return careVo;
         }).collect(Collectors.toList());
         pageInfo.setList(careVoList);
+        PageHelper.clearPage();
         return pageInfo;
     }
 
@@ -84,5 +85,11 @@ public class CareServiceImpl implements CareService {
         map.put("status",statusTotal);
         map.put("env",envTotal);
         return map;
+    }
+
+    @Override
+    public void addCare(Care care, Long treeId) {
+        care.setTreeId(treeId);
+        careMapper.insert(care);
     }
 }

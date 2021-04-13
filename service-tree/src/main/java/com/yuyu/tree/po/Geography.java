@@ -1,9 +1,5 @@
 package com.yuyu.tree.po;
 
-import com.yuyu.tree.enums.AspectEnum;
-import com.yuyu.tree.enums.CompactnessEnum;
-import com.yuyu.tree.enums.PositionEnum;
-import com.yuyu.tree.enums.SlopeEnum;
 import lombok.Data;
 
 /**
@@ -25,11 +21,6 @@ public class Geography {
      * 地址
      */
     private String address;
-
-    /**
-     * 经纬度
-     */
-    private byte[] gis;
 
     /**
      * 海拔

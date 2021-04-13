@@ -1,4 +1,4 @@
-package com.yuyu.tree.po;
+package com.yuyu.map.po;
 
 import lombok.Data;
 

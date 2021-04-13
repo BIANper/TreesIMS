@@ -41,8 +41,8 @@ public class R extends HashMap<String, Object> {
 		return this;
 	}
 
-	public String get(String key) {
-		return (String) super.get(key);
+	public Object get(String key) {
+		return super.get(key);
 	}
 
 	public Integer getCode() {
@@ -50,6 +50,6 @@ public class R extends HashMap<String, Object> {
 	}
 
 	public String getMsg() {
-		return this.get("msg");
+		return (String) this.get("msg");
 	}
 }
