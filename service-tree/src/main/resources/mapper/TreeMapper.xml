@@ -36,10 +36,10 @@
     <select id="selectByCond" resultType="com.yuyu.tree.po.Tree">
       select <include refid="Base_Column_List" /> from Tree
         <where>
-          <if test="identifier != null">
+          <if test="identifier != null and identifier != ''">
             and identifier = #{identifier,jdbcType=CHAR}
           </if>
-          <if test="name != null">
+          <if test="name != null and name != ''">
             and name_Zh = #{name,jdbcType=VARCHAR}
           </if>
           <if test="classes != null">

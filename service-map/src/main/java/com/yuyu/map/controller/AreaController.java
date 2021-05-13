@@ -1,5 +1,6 @@
 package com.yuyu.map.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.yuyu.common.utils.R;
 import com.yuyu.map.po.Area;
 import com.yuyu.map.service.AreaService;
@@ -40,6 +41,13 @@ public class AreaController {
     public R getArea(@PathVariable("id") Integer id) {
         Area area = areaService.getArea(id);
         return R.ok().put("data",area.getName());
+    }
+
+    @ApiOperation(httpMethod = "GET",value = "获取中心点坐标")
+    @GetMapping("/center/{areaId}")
+    public R getAreaCenter(@PathVariable("areaId") Integer areaId) {
+        JSONArray areaCenter = areaService.getAreaCenter(areaId);
+        return R.ok().put("data",areaCenter);
     }
 
 }

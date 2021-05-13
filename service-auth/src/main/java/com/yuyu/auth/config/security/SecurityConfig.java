@@ -99,42 +99,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    LoginFilter loginFilter() throws Exception {
-        LoginFilter loginFilter = new LoginFilter();
-        loginFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
-            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-            PrintWriter out = response.getWriter();
-            User user = (User) authentication.getPrincipal();
-            UserVo userVo = new UserVo();
-            BeanUtils.copyProperties(user,userVo);
-            userVo.setAuthorities(user.getAuthorities());
-            out.write(new ObjectMapper().writeValueAsString(R.ok("登录成功").put("data",userVo)));
-            out.flush();
-            out.close();
-        });
-        loginFilter.setAuthenticationFailureHandler((request, response, exception) -> {
-            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-            PrintWriter out = response.getWriter();
-            R error = R.error(HttpStatus.SC_UNAUTHORIZED,"登录失败");
-            if (exception instanceof LockedException) {
-                error.put("data","账户被锁定，请联系管理员");
-            } else if (exception instanceof CredentialsExpiredException) {
-                error.put("data","密码过期，请联系管理员");
-            } else if (exception instanceof AccountExpiredException) {
-                error.put("data","账户过期，请联系管理员");
-            } else if (exception instanceof DisabledException) {
-                error.put("data","账户被禁用，请联系管理员");
-            } else if (exception instanceof BadCredentialsException) {
-                error.put("data","用户名或者密码输入错误，请重新输入");
-            } else {
-                error.put("data",exception.getMessage());
-            }
-            out.write(new ObjectMapper().writeValueAsString(error));
-            out.flush();
-            out.close();
-        });
-        loginFilter.setAuthenticationManager(authenticationManagerBean());
-        loginFilter.setFilterProcessesUrl("/login");
+LoginFilter loginFilter() throws Exception {
+    LoginFilter loginFilter = new LoginFilter();
+    loginFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        PrintWriter out = response.getWriter();
+        User user = (User) authentication.getPrincipal();
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(user,userVo);
+        userVo.setAuthorities(user.getAuthorities());
+        out.write(new ObjectMapper().writeValueAsString(R.ok("登录成功").put("data",userVo)));
+        out.flush();
+        out.close();
+    });
+    loginFilter.setAuthenticationFailureHandler((request, response, exception) -> {
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        PrintWriter out = response.getWriter();
+        R error = R.error(HttpStatus.SC_UNAUTHORIZED,"登录失败");
+        if (exception instanceof LockedException) {
+            error.put("data","账户被锁定，请联系管理员");
+        } else if (exception instanceof CredentialsExpiredException) {
+            error.put("data","密码过期，请联系管理员");
+        } else if (exception instanceof AccountExpiredException) {
+            error.put("data","账户过期，请联系管理员");
+        } else if (exception instanceof DisabledException) {
+            error.put("data","账户被禁用，请联系管理员");
+        } else if (exception instanceof BadCredentialsException) {
+            error.put("data","用户名或者密码输入错误，请重新输入");
+        } else {
+            error.put("data",exception.getMessage());
+        }
+        out.write(new ObjectMapper().writeValueAsString(error));
+        out.flush();
+        out.close();
+    });
+    loginFilter.setAuthenticationManager(authenticationManagerBean());
+    loginFilter.setFilterProcessesUrl("/login");
         ConcurrentSessionControlAuthenticationStrategy sessionStrategy = new ConcurrentSessionControlAuthenticationStrategy(sessionRegistry());
         sessionStrategy.setMaximumSessions(1);
         loginFilter.setSessionAuthenticationStrategy(sessionStrategy);

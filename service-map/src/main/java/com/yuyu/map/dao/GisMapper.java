@@ -10,5 +10,5 @@ public interface GisMapper {
 
     List<GIS> getAll();
 
-    List<GIS> getByTreeIds(List<Long> treeIds);
+    List<GIS> getByTreeIds(List<Integer> treeIds);
 }

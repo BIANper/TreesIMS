@@ -14,4 +14,5 @@ public interface AreaMapper {
 
     Area getById(Integer areaId);
 
+    String getCenterById(Integer areaId);
 }

@@ -13,4 +13,8 @@
     <select id="getById" resultType="com.yuyu.map.po.Area">
         SELECT * FROM tims_map.area WHERE `id`=#{id};
     </select>
+
+    <select id="getCenterById" resultType="java.lang.String">
+        SELECT  ST_AsText(center) as center FROM area WHERE `id`=#{areaId};
+    </select>
 </mapper>

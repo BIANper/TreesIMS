@@ -6,6 +6,9 @@
         SELECT id, tree_id, ST_AsText(gis) as gis FROM tims_map.gis;
     </select>
     <select id="getByTreeIds" resultType="com.yuyu.map.po.GIS">
-        SELECT id, tree_id, ST_AsText(gis) as gis FROM tims_map.gis WHERE tree_id IN #{treeIds};
+        SELECT id, tree_id, ST_AsText(gis) as gis FROM tims_map.gis WHERE tree_id IN
+        <foreach collection="list" item="treeIds" index="index" open="(" close=")" separator=",">
+            #{treeIds}
+        </foreach>
     </select>
 </mapper>

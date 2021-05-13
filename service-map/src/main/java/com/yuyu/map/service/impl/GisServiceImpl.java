@@ -3,6 +3,7 @@ package com.yuyu.map.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.github.pagehelper.PageInfo;
 import com.yuyu.common.utils.R;
 import com.yuyu.map.dao.GisMapper;
@@ -15,6 +16,7 @@ import com.yuyu.map.vo.TreesSearchVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,12 +48,16 @@ public class GisServiceImpl implements GisService {
 
     @Override
     public List<JSONObject> getGisList(TreesSearchVo searchVo) {
-        R r = treeFeignService.getTreeBaseList(searchVo);
-        PageInfo pageInfo = (PageInfo)r.get("data");
-        List<TreeBaseVo> baseVoList = pageInfo.getList();
-        List<Long> collectIds = baseVoList.stream().map(Tree::getId).collect(Collectors.toList());
+        String s1 = JSONObject.toJSONString(searchVo, SerializerFeature.WriteMapNullValue);
+        Object object = JSON.parseObject(s1);
+        JSONObject jsonObject = JSON.parseObject(JSONObject.toJSONString(object,SerializerFeature.WriteMapNullValue));
+        R r = treeFeignService.getTreeBaseList(jsonObject);
+        LinkedHashMap<String,Object> pageInfo = (LinkedHashMap<String,Object>) r.get("data");
+        List<LinkedHashMap<String,Object>> baseVoList = (List<LinkedHashMap<String,Object>>) pageInfo.get("list");
+        List<Integer> collectIds = baseVoList.stream().map(it-> (Integer) it.get("id")).collect(Collectors.toList());
+        if(collectIds.isEmpty()) return null;
         List<GIS> gisList = gisMapper.getByTreeIds(collectIds);
-        List<JSONObject> collect = gisList.stream().map(it -> {
+        return gisList.stream().map(it -> {
             String gis = it.getGis();
             JSONObject jsonObj = JSON.parseObject(JSONObject.toJSONString(it));
             String sb = new StringBuffer(gis.substring(6)).reverse().substring(1);
@@ -62,7 +68,6 @@ public class GisServiceImpl implements GisService {
             jsonObj.put("position", array);
             return jsonObj;
         }).collect(Collectors.toList());
-        return collect;
     }
 
 }

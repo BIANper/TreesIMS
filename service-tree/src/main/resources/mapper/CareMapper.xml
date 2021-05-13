@@ -36,7 +36,7 @@
     select
     <include refid="Base_Column_List" />
     from Care
-    where growth_status >= 2
+    where growth_status >= 2 or growth_env = 2
   </select>
   <select id="selectStatusTotal" resultMap="statusMap">
     select count(*) as 'total',growth_status as 'status' from Care group by growth_status order by growth_status
