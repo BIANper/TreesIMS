@@ -18,4 +18,6 @@ public interface CareService {
     Map<String, List<Map<String, String>>> getChartData();
 
     void addCare(Care care, Long treeId);
+
+    Care getCare(Long treeId);
 }

@@ -29,8 +29,15 @@ public class CareController {
         return R.ok().put("data",page);
     }
 
+    @ApiOperation(httpMethod = "GET",value = "获取养护数据")
+    @GetMapping("/{treeId}")
+    public R getCare(@PathVariable("treeId") Long treeId) {
+        Care care = careService.getCare(treeId);
+        return R.ok().put("data",care);
+    }
+
     @ApiOperation(httpMethod = "PUT",value = "更新养护数据")
-    @PutMapping("/")
+    @PutMapping(name = "/")
     public R updateCare(Care care) {
         careService.updateCare(care);
         return R.ok();
@@ -43,12 +50,11 @@ public class CareController {
         return R.ok();
     }
 
-    @ApiOperation(httpMethod = "PUT",value = "获取图表数据")
+    @ApiOperation(httpMethod = "GET",value = "获取图表数据")
     @GetMapping("/chart")
     public R getChartData() {
         Map<String, List<Map<String, String>>> data = careService.getChartData();
         return R.ok().put("data",data);
     }
-
 
 }

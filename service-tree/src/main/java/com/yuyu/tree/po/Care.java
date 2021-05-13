@@ -1,7 +1,5 @@
 package com.yuyu.tree.po;
 
-import com.yuyu.tree.enums.EnvEnum;
-import com.yuyu.tree.enums.StatusEnum;
 import lombok.Data;
 
 /**
@@ -27,12 +25,12 @@ public class Care {
     /**
      * 保护
      */
-    private Integer protection;
+    private String protection;
 
     /**
      * 复壮
      */
-    private Integer rejuvenate;
+    private String rejuvenate;
 
     /**
      * 补充

@@ -92,4 +92,10 @@ public class CareServiceImpl implements CareService {
         care.setTreeId(treeId);
         careMapper.insert(care);
     }
+
+    @Override
+    public Care getCare(Long treeId) {
+        Care care = careMapper.selectByTreeId(treeId);
+        return care;
+    }
 }
